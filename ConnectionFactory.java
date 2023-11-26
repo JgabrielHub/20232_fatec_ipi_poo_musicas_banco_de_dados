@@ -2,14 +2,20 @@ import java.io.FileInputStream;
 import java.sql.DriverManager;
 import java.io.File;
 import java.util.Properties;
+import java.nio.file.Paths;
+
 public class ConnectionFactory {
   private static Properties properties;
   static{
     try{
       properties = new Properties();
-      properties.load(new FileInputStream(new File("conf.properties")));
+
+      var root = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+      properties.load(new FileInputStream(new File(root + "conf.properties")));
+      
     }
     catch(Exception e){
+      e.printStackTrace();
       System.exit(1);
     }
   }

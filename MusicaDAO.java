@@ -6,7 +6,7 @@ public class MusicaDAO {
 
   public void cadastrar(Musica musica) throws Exception{
     //1. Especificar o comando SQL
-    String sql = "INSERT INTO tb_musica(titulo) VALUES(?)";
+    String sql = "INSERT INTO tb_musica(titulo,ativo) VALUES(?,true)";
     //2. Estabelecer uma conexão com o SGBD (PostgreSQL)
     var conexao = ConnectionFactory.conectar();
     //3.Preparar o comando
@@ -71,4 +71,22 @@ public class MusicaDAO {
 
     }
   }
+  
+  public void remover(Musica musica) throws Exception {
+    String sql = "DELETE FROM tb_musica WHERE titulo = ? AND ativo = true";
+    try (
+        var conexao = ConnectionFactory.conectar();
+        var ps = conexao.prepareStatement(sql);
+    ) {
+        ps.setString(1, musica.getTitulo());
+        int rowsAffected = ps.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Música removida!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Música não encontrada ou não pode ser removida!");
+        }
+    }
+}
+
 }

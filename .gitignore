@@ -1,1 +1,5 @@
 *.class
+conf.properties*
+.properties
+lib
+/lib

@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
-// @Setter
+//@Setter
 @RequiredArgsConstructor
+
 public class Musica {
   private int codigo;
   private final String titulo;

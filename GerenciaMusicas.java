@@ -1,6 +1,7 @@
 import static javax.swing.JOptionPane.showInputDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
-
+import static java.lang.Integer.parseInt;
+import java.util.Collections;
 import javax.swing.JOptionPane;
 
 import static java.lang.Integer.parseInt;
@@ -9,7 +10,7 @@ public class GerenciaMusicas {
     
     var musicaDAO = new MusicaDAO();
     int op = -1;
-    String menu = "1-Cadastrar música\n2-Avaliar música\n3-Ver músicas\n0-Sair";
+    String menu = "1-Cadastrar música\n2-Avaliar música\n3-Ver músicas\n4-Remover música\n0-Sair";
     do{
       try{
         op = parseInt(showInputDialog(menu));
@@ -30,7 +31,14 @@ public class GerenciaMusicas {
           }
           case 3:{
             musicaDAO.listar();
+            break;
           }
+          case 4: {
+            String titulo = showInputDialog("Título da música a ser removida?");
+            var musica = new Musica(titulo, 0); // Suponha que a música é ativa
+            musicaDAO.remover(musica);
+            break;
+        }
           case 0:
             showMessageDialog(null, "Até logo");
             break;
