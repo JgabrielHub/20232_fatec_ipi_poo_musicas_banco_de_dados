@@ -1,7 +1,10 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JOptionPane;
+
 public class MusicaDAO {
 
   public void cadastrar(Musica musica) throws Exception{
@@ -87,6 +90,30 @@ public class MusicaDAO {
             JOptionPane.showMessageDialog(null, "Música não encontrada ou não pode ser removida!");
         }
     }
+}
+
+public List<Musica> obterMusicasOrdenadasPorAvaliacao() throws Exception {
+  List<Musica> musicas = new ArrayList<>();
+  String sql = "SELECT titulo, avaliacao FROM tb_musica WHERE ativo = true";
+  
+  try (
+      var conexao = ConnectionFactory.conectar();
+      var ps = conexao.prepareStatement(sql);
+      ResultSet rs = ps.executeQuery();
+  ) {
+      while (rs.next()) {
+          String titulo = rs.getString("titulo");
+          int avaliacao = rs.getInt("avaliacao");
+
+          Musica musica = new Musica(titulo, avaliacao);
+          musicas.add(musica);
+      }
+  }
+
+  // Ordenar a lista usando o Comparator
+  Collections.sort(musicas, new ComparadorPorAvaliacao());
+
+  return musicas;
 }
 
 }

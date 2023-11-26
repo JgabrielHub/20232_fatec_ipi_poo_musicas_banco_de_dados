@@ -2,6 +2,8 @@ import static javax.swing.JOptionPane.showInputDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 import static java.lang.Integer.parseInt;
 import java.util.Collections;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import static java.lang.Integer.parseInt;
@@ -30,8 +32,11 @@ public class GerenciaMusicas {
             break;
           }
           case 3:{
-            musicaDAO.listar();
-            break;
+            List<Musica> musicas = musicaDAO.obterMusicasOrdenadasPorAvaliacao();
+                        for (Musica musica : musicas) {
+                            showMessageDialog(null, musica);
+                        }
+                        break;
           }
           case 4: {
             String titulo = showInputDialog("Título da música a ser removida?");
